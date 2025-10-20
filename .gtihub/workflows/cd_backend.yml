@@ -1,25 +1,28 @@
-name: deploy the backend
+name: Deploy the Backend
+
 on:
-   push:
-    branches:[main]
+  push:
+    branches:
+      - main
+
 jobs:
- build:
-    runs on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: checkout the code
-        uses:  actions.checkout@v2
+      - name: Checkout the code
+        uses: actions/checkout@v2
 
-      - name:  Docker login
-        uses:  docker/login-action@v2
+      - name: Docker Login
+        uses: docker/login-action@v2
         with:
-          username: ${{secrets.DOCKERHUB_USERNAME}}
-          password: ${{secrets.DOCKERHUB_TOKEN}}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and Push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           file: ./docker/Dockerfile.backend
-          push:true
-          tags: krishna9987/Monoreposcicd:${{ github.sha }}
-          
+          push: true
+          tags: krishna9987/monoreposcicd:${{ github.sha }}
