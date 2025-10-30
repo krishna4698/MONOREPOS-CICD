@@ -22,7 +22,7 @@ app.post("/user", (req, res) => {
     res.status(400).json({ error: "Username and password are required" });
     return
   }
-
+ 
   prismaClient.user.create({
     data: {
       username,
